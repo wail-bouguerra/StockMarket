@@ -1,0 +1,22 @@
+# --- .NET ---
+bin/
+obj/
+*.user
+*.vs/
+*.suo
+*.userosscache
+*.sln.docstates
+
+# --- Node / React ---
+node_modules/
+build/
+dist/
+
+# --- OS files ---
+.DS_Store
+Thumbs.db
+
+# --- Env files ---
+.env
+.env.local
+.env.*.local
