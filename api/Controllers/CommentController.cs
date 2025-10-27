@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using api.Dtos.Comment;
 using api.interfaces;
 using api.Mappers;
+using api.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
@@ -23,6 +24,7 @@ namespace api.Controllers
 
 
 
+
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -32,6 +34,7 @@ namespace api.Controllers
             var commentDto = comments.Select(c => c.ToCommentDto());
             return Ok(commentDto);
         }
+
 
 
 
@@ -45,6 +48,8 @@ namespace api.Controllers
                 return NotFound();
             return Ok(comment.ToCommentDto());
         }
+
+
 
 
         [HttpPost("{stockId:int}")]
@@ -65,17 +70,19 @@ namespace api.Controllers
         }
 
 
+
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateCommentDto commentDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var commentModel = commentDto.ToCommentFromUpdate();
-             if (commentModel == null)
+            var comment = await _commentrepo.UpdateAsync(id, commentDto);
+            if (comment == null)
                 return NotFound();
-            await _commentrepo.UpdateAsync(id, commentModel);
-            return Ok(commentModel.ToCommentDto());
+
+            return Ok(comment.ToCommentDto());
         }
+        
 
         [HttpDelete("{id:int}")]
         

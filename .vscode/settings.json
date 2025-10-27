@@ -1,10 +1,12 @@
 {
     "cSpell.words": [
         "commentrepo",
+        "docstates",
         "Dtos",
         "Newtonsoft",
         "SQLEXPRESS",
         "stockrepo",
-        "Swashbuckle"
+        "Swashbuckle",
+        "userosscache"
     ]
 }
