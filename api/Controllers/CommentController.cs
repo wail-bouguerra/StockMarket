@@ -5,8 +5,6 @@ using System.Threading.Tasks;
 using api.Dtos.Comment;
 using api.interfaces;
 using api.Mappers;
-using api.Models;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
@@ -51,16 +49,38 @@ namespace api.Controllers
 
         {
             var stock = await _stockrepo.GetByIdAsync(stockId);
-            // var testBool = await _stockrepo.StockExists(stockId);
 
             if (!await _stockrepo.StockExists(stockId))
                 return NotFound();
 
             var commentModel = commentDto.ToCommentFromCreate(stockId);
             await _commentrepo.CreateAsync(commentModel);
-            return CreatedAtAction(nameof(GetById), new { id = commentModel }, commentModel.ToCommentDto());
+            return CreatedAtAction(nameof(GetById), new { id = commentModel.Id }, commentModel.ToCommentDto());
 
         }
+
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateCommentDto commentDto)
+        {
+            var commentModel = commentDto.ToCommentFromUpdate();
+             if (commentModel == null)
+                return NotFound();
+            await _commentrepo.UpdateAsync(id, commentModel);
+            return Ok(commentModel.ToCommentDto());
+        }
+
+        [HttpDelete("{id}")]
+        
+        public async Task<IActionResult> Delete([FromRoute] int id)
+        {
+            var commentModel = await _commentrepo.GetByIdAsync(id);
+            if (commentModel == null)
+                return NotFound();
+            await _commentrepo.DeleteAsync(id);
+            return NoContent();
+        }
+
     
     }
 }

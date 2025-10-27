@@ -69,7 +69,7 @@ namespace api.Controllers
 
             return Ok(stock.ToStockDto());
         }
-        
+
 
 
 
@@ -85,5 +85,6 @@ namespace api.Controllers
 
             return NoContent();
         }
+        
     }
 }
