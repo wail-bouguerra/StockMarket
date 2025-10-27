@@ -51,7 +51,7 @@ namespace api.Controllers
             var stock = await _stockrepo.GetByIdAsync(stockId);
 
             if (!await _stockrepo.StockExists(stockId))
-                return NotFound();
+                return NotFound("Stock not found");
 
             var commentModel = commentDto.ToCommentFromCreate(stockId);
             await _commentrepo.CreateAsync(commentModel);
