@@ -4,6 +4,7 @@
         "Dtos",
         "Newtonsoft",
         "SQLEXPRESS",
+        "stockrepo",
         "Swashbuckle"
     ]
 }
