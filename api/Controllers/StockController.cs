@@ -7,6 +7,7 @@ using api.Dtos.Stock;
 using api.interfaces;
 using api.Mappers;
 using api.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,9 +24,10 @@ namespace api.Controllers
             _stockRepo = stockRepo;
         }
 
-        
+
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAll()
         {
             if (!ModelState.IsValid)
